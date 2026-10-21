@@ -1,0 +1,8 @@
+{
+  "name": "decision-register",
+  "version": "0.2.0",
+  "description": "Keep project decisions in one decisions.yaml (MADR four states) and keep DECISIONS.md / decisions.html in sync through a bundled hook.",
+  "author": { "name": "decision-register contributors" },
+  "license": "MIT",
+  "keywords": ["decisions", "adr", "madr", "research", "project-management"]
+}

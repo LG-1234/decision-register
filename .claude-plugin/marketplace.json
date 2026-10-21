@@ -1,0 +1,12 @@
+{
+  "name": "decision-register",
+  "owner": { "name": "decision-register contributors" },
+  "description": "Decision register (MADR four states) for Claude Code.",
+  "plugins": [
+    {
+      "name": "decision-register",
+      "source": "./",
+      "description": "Decision register skill with an auto-render hook."
+    }
+  ]
+}

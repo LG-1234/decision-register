@@ -59,13 +59,17 @@ description: 维护项目的决定登记簿（MADR 四态：待定 / 已定 / �
 
 ## 3. 渲染
 
+**以 plugin 安装时会自动渲染。**plugin 自带一个 PostToolUse hook：每次 Edit、Write 或 Bash 之后，只要项目里某个 `decisions.yaml` 比旁边的 `decisions.html` 新（或 HTML 还不存在），就重新渲染。渲染失败时 hook 会把错误报给你，必须先修好再继续。
+
+以下情况要手动运行：只装了 skill 没装 plugin、用 Codex 或手工改了 yaml、改了渲染脚本。
+
 ```bash
 python3 -I <skill>/scripts/render_decisions.py docs/status/decisions.yaml
 ```
 
 在 yaml 同目录生成 `DECISIONS.md` 和 `decisions.html`。证据路径相对 `meta.root`（默认是 yaml 往上两级）解析；文件存在就变成链接。
 
-可选：在 Claude Code 里加一个 PostToolUse hook，`decisions.yaml` 比 `decisions.html` 新时自动运行上面的命令。
+hook 只保证"yaml 改了，页面就更新"。决定只在对话里说了、没写进 yaml，hook 不会知道，所以第 2 节的"同一轮写进 yaml"仍然是硬规则。
 
 ## 4. 核对（每次写完都做）
 
