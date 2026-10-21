@@ -1,0 +1,60 @@
+# 决定登记簿（MADR 四态）：唯一真相源。每条决定一张卡。
+# status: proposed（待定，owner 写明等谁）| accepted（已定）| superseded（被替代，superseded_by 指向新条目）| rejected（已否决）
+# evidence: 文件路径（相对 meta.root）或 commit；不要写聊天记录。
+# 渲染：python3 -I <skill>/scripts/render_decisions.py decisions.yaml
+meta:
+  title: 示例项目 决定登记簿
+  root: ../..            # 证据路径相对这里解析（相对本文件所在目录）
+  sides:                 # 键 → 显示名；页面按这个顺序分组
+    data: 数据
+    model: 模型
+    repo: 仓库与工作方式
+  owners:
+    user: 用户
+    supervisor: 导师
+    team: 团队
+  require_step_for: [data]
+updated: 2026-01-15
+decisions:
+  - id: D01
+    side: data
+    step: Step02
+    gate: J1
+    title: 样本年龄范围取 25–64 岁
+    status: accepted
+    date: 2026-01-10
+    owner: user
+    context: 25 岁以下多数仍在读书；65 岁以上退休口径不同。
+    options: [A 25–64（主样本）, B 20–69（覆盖更广，噪声更大）]
+    decision: 用 A；B 作稳健性检查。用户 2026-01-10 确认。
+    consequences: 改为 B 需重跑 Step02 之后的所有描述统计。
+    evidence: [docs/sample_definition.md]
+    supersedes: [D01-old]
+  - id: D01-old
+    side: data
+    step: Step02
+    title: 样本年龄范围取 20–69 岁
+    status: superseded
+    date: 2026-01-03
+    owner: user
+    decision: 初版取 20–69。
+    superseded_by: D01
+    evidence: [commit abc1234]
+  - id: D02
+    side: model
+    gate: M3
+    title: 折现因子是外部给定还是估计
+    status: proposed
+    date: 2026-01-15
+    owner: supervisor
+    context: 外部给定可减少一个待估参数，但与文献值差异较大时会影响拟合。
+    options: [A 外部给定 0.96, B 与其他参数一起估计]
+    decision: 未定。建议 A，B 作附录。
+    consequences: 选 B 需要重新做识别检查。
+  - id: D03
+    side: repo
+    title: 生成的页面不手改，只改 yaml
+    status: accepted
+    date: 2026-01-02
+    owner: team
+    decision: DECISIONS.md 和 decisions.html 一律由脚本生成。
